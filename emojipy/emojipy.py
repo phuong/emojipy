@@ -21,7 +21,7 @@ class Emoji(object):
     ascii = False
     unicode_alt = True
     image_type = 'png'
-    cache_bust_param = '?v=1.2.5'
+    cache_bust_param = '?v=2.2.4'
     sprites = False
     image_png_path = 'https://cdn.jsdelivr.net/emojione/assets/png/'
     image_svg_path = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
