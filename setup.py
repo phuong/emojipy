@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='emojipy',
-      version='0.1.4',
+      version='0.1.5',
       description='Python wrapper for emojione',
       author='Kaviraj Kanagaraj',
       author_email='kaviraj@launchyard.com',
