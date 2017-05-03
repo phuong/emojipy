@@ -14,7 +14,7 @@ else:
     unescape = HTMLParser.unescape
     chr = unichr
 
-from ruleset import unicode_replace, shortcode_replace, ascii_replace, category_replace
+from .ruleset import unicode_replace, shortcode_replace, ascii_replace, category_replace
 
 
 class Emoji(object):

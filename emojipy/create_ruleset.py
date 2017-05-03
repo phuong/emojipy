@@ -34,6 +34,10 @@ for key, value in data_dict.items():
         unicode_char = ''.join(chr(int(part, 16)) for part in parts)
         unicode_replace[unicode_char.encode('utf-8')] = shortname
 
+print(unicode_replace)
+print(shortcode_replace)
+print(ascii_replace)
+print(category_replace)
 cog.out('unicode_replace = %s\n\n' % unicode_replace)
 cog.out('shortcode_replace = %s\n\n' % shortcode_replace)
 cog.out('ascii_replace = %s\n\n' % ascii_replace)

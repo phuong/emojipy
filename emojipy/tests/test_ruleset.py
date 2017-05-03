@@ -8,8 +8,8 @@ import json
 from emojipy.ruleset import ascii_replace,\
     unicode_replace, shortcode_replace, category_replace
 
-json_path = '../../../../emoji.json'
-
+#json_path = '../../../../emoji.json'
+json_path = '../emoji.json'
 
 class MappingTests(TestCase):
     def setUp(self):
