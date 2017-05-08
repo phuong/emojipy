@@ -42,7 +42,9 @@ class Emoji(object):
         return text
 
     @classmethod
-    def unicode_to_image(cls, text):
+    def unicode_to_image(cls, text, **kwargs):
+        css_class = kwargs.pop('css', '')
+        style = kwargs.pop('style', '')
         def replace_unicode(match):
             unicode_char = text[match.start():match.end()]
             unicode_encoded = unicode_char.encode('utf-8')
@@ -60,8 +62,8 @@ class Emoji(object):
                 return '<span class="emojione emojione-32-%s _%s" title="%s">%s</span>' \
                        % (category, filename, escape(shortcode), alt)
             else:
-                return '<img class="emojione" alt="%s" src="%s"/>' % (
-                    alt,
+                return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
+                    css_class, style, alt,
                     cls.image_png_path + filename + '.png'
                 )
 
@@ -69,7 +71,9 @@ class Emoji(object):
         return text
 
     @classmethod
-    def shortcode_to_image(cls, text):
+    def shortcode_to_image(cls, text, **kwargs):
+        css_class = kwargs.pop('css', '')
+        style = kwargs.pop('style', '')
         def replace_shortcode(match):
             shortcode = text[match.start():match.end()]
             if not shortcode or shortcode not in shortcode_replace:
@@ -86,8 +90,8 @@ class Emoji(object):
                 return '<span class="emojione emojione-32-%s _%s" title="%s">%s</span>' \
                        % (category, filename, escape(shortcode), alt)
             else:
-                return '<img class="emojione" alt="%s" src="%s"/>' % (
-                    alt,
+                return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
+                    css_class, style, alt,
                     cls.image_png_path + filename + '.png'
                 )
 
@@ -138,7 +142,9 @@ class Emoji(object):
         return re.sub(cls.ascii_compiled, replace_ascii, text)
 
     @classmethod
-    def ascii_to_image(cls, text):
+    def ascii_to_image(cls, text, **kwargs):
+        css_class = kwargs.pop('css', '')
+        style = kwargs.pop('style', '')
         def replace_ascii(match):
             ascii = text[match.start():match.end()]
             ascii = unescape(ascii)  # convert escaped HTML entities back to original chars
@@ -150,8 +156,8 @@ class Emoji(object):
             else:
                 alt = escape(ascii)
 
-            return '<img class="emojione" alt="%s" src="%s"/>' % (
-                alt,
+            return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
+                css_class, style, alt,
                 cls.image_png_path + unicode + '.png'
             )
 
