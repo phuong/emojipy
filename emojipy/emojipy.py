@@ -167,7 +167,7 @@ class Emoji(object):
     def unicode_to_shortcode(cls, text):
         def replace_unicode(match):
             unicode_char = text[match.start():match.end()]
-            if ord(unicode_char) <= 127:
+            if len(unicode_char)==1 and ord(unicode_char) <= 127:
                 return unicode_char
             unicode_encoded = unicode_char.encode('utf-8')
             if not unicode_encoded or unicode_encoded not in unicode_replace:
