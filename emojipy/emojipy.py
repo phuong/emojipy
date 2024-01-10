@@ -6,6 +6,7 @@ import six
 
 if six.PY3:
     from html import escape, unescape
+    from inspect import isfunction
 else:
     from cgi import escape
     from HTMLParser import HTMLParser
@@ -16,12 +17,15 @@ else:
 
 from .ruleset import unicode_replace, shortcode_replace, ascii_replace, category_replace
 
+def image(base_path, name, css_class, style, alt):
+    return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
+                    css_class, style, alt, base_path + name + ".png")
 
 class Emoji(object):
     ascii = False
     unicode_alt = True
     sprites = False
-    image_png_path = 'https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/'
+    image_png_path = 'https://cdn.jsdelivr.net/joypixels/assets/8.0/png/unicode/64/'
     ignored_regexp = '<object[^>]*>.*?<\/object>|<span[^>]*>.*?<\/span>|<(?:object|embed|svg|img|div|span|p|a)[^>]*>'
     unicode_regexp = "(" + '|'.join(
         [re.escape(x.decode("utf-8")) for x in sorted(unicode_replace.keys(), key=len, reverse=True)]) + ")"
@@ -62,10 +66,11 @@ class Emoji(object):
                 return '<span class="emojione emojione-32-%s _%s" title="%s">%s</span>' \
                        % (category, filename, escape(shortcode), alt)
             else:
-                return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
-                    css_class, style, alt,
-                    cls.image_png_path + filename + '.png'
-                )
+                return image(base_path=cls.image_png_path,
+                             name=filename,
+                             css_class=css_class,
+                             style=style,
+                             alt=alt)
 
         text = re.sub(cls.unicode_compiled, replace_unicode, text)
         return text
@@ -90,10 +95,11 @@ class Emoji(object):
                 return '<span class="emojione emojione-32-%s _%s" title="%s">%s</span>' \
                        % (category, filename, escape(shortcode), alt)
             else:
-                return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
-                    css_class, style, alt,
-                    cls.image_png_path + filename + '.png'
-                )
+                return image(base_path=cls.image_png_path,
+                             name=filename,
+                             css_class=css_class,
+                             style=style,
+                             alt=alt)
 
         text = re.sub(cls.shortcode_compiled, replace_shortcode, text)
         if cls.ascii:
@@ -156,10 +162,11 @@ class Emoji(object):
             else:
                 alt = escape(ascii)
 
-            return '<img class="emojione %s" style="%s" alt="%s" src="%s"/>' % (
-                css_class, style, alt,
-                cls.image_png_path + unicode + '.png'
-            )
+            return image(base_path=cls.image_png_path,
+                         name=unicode,
+                         css_class=css_class,
+                         style=style,
+                         alt=alt)
 
         return re.sub(cls.ascii_compiled, replace_ascii, text)
 
